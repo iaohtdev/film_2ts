@@ -47,6 +47,7 @@ dependencies:
   widget_mask: ^1.0.0+0
   cached_network_image:
   palette_generator: 
+  intl: ^0.17.0
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
   flutter_test:

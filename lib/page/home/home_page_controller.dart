@@ -17,8 +17,14 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    getDocId();
-    getListPopularMovie();
+   
+  }
+
+   Future<String> fechData() async {
+    await getDocId();
+    await getListPopularMovie();
+    return Future.value("Data download successfully");
+
   }
 
   Future getDocId() async {
@@ -42,11 +48,6 @@ class HomeController extends GetxController {
   }
 
   ontapMovie(int id) async {
-    // await ApiProvider().getDetailMovie(id).then((respone) async {
-    //   movieModel.value = await MovieModel.fromJson(respone);
-
-    //   Get.toNamed(Routes.detailpage, arguments: movieModel.value);
-    // });
     Get.toNamed(Routes.detailpage, arguments: id);
   }
 }

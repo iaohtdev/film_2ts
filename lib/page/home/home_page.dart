@@ -5,10 +5,7 @@ import 'package:movie_info/widget/background_gradient.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:movie_info/models/movie.dart';
-import 'package:movie_info/page/home/components/masked_image.dart';
 import 'package:movie_info/page/home/components/search.dart';
-import 'package:movie_info/routers/app_pages.dart';
 import 'package:widget_mask/widget_mask.dart';
 
 class HomePage extends GetView<HomeController> {
@@ -28,137 +25,60 @@ class HomePage extends GetView<HomeController> {
             bottom: false,
             child: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
-              child: SingleChildScrollView(
-                primary: true,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 24,
-                    ),
-                    _header(),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    const SearchFieldWidget(),
-                    const SizedBox(
-                      height: 39,
-                    ),
-                    _lstPopular(),
-                    const SizedBox(
-                      height: 38,
-                    ),
-                  //  _lstRating(),
-                    const SizedBox(
-                      height: 38,
-                    ),
-                  // _lstUpComing(),
-                    const SizedBox(
-                      height: 100,
-                    ),
-                  ],
-                ),
-              ),
+              child: FutureBuilder<String>(
+                  future: controller.fechData(),
+                  builder: (BuildContext context, AsyncSnapshot<String>snapshot ) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(
+                          child: Image.asset(
+                        "assets/gif/loading.gif",
+                        scale: 2,
+                      ));
+                    } else if (snapshot.hasError) {
+                      return Center(
+                          child: Text(
+                        "Có lỗi trong quá trình tải dữ liệu",
+                        style: TextStyle(color: Colors.white),
+                      ));
+                    } else
+                      return SingleChildScrollView(
+                        primary: true,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(
+                              height: 24,
+                            ),
+                            _header(),
+                            const SizedBox(
+                              height: 30,
+                            ),
+                            const SearchFieldWidget(),
+                            const SizedBox(
+                              height: 39,
+                            ),
+                            _lstPopular(),
+                            const SizedBox(
+                              height: 38,
+                            ),
+                            //  _lstRating(),
+                            const SizedBox(
+                              height: 38,
+                            ),
+                            // _lstUpComing(),
+                            const SizedBox(
+                              height: 100,
+                            ),
+                          ],
+                        ),
+                      );
+                  }),
             ),
           ),
         ],
       ),
     );
   }
-
-//   Column _lstUpComing() {
-//     return Column(children: [
-// const Text(
-//                     'Phim sắp chiếu',
-//                     style: TextStyle(
-//                       color: Colors.white,
-//                       fontSize: 17,
-//                     ),
-//                   ),
-//                   const SizedBox(
-//                     height: 37,
-//                   ),
-//                   SizedBox(
-//                     height: 160,
-//                     child: ListView.builder(
-//                       shrinkWrap: true,
-//                       scrollDirection: Axis.horizontal,
-//                       itemCount: upcomingMovies.length,
-//                       itemBuilder: (context, index) {
-//                         String mask;
-//                         if (index == 0) {
-//                           mask = "assets/images/mask_firstIndex.png";
-//                         } else if (index == upcomingMovies.length - 1) {
-//                           mask = "assets/images/mask_lastIndex.png";
-//                         } else {
-//                           mask = "assets/images/mask.png";
-//                         }
-//                         return GestureDetector(
-//                           onTap: () {
-//                             Get.toNamed(Routes.detailpage);
-//                           },
-//                           child: SizedBox(
-//                             height: 160,
-//                             width: 142,
-//                             child: MaskedImage(
-//                               asset: upcomingMovies[index].moviePoster,
-//                               mask: mask,
-//                             ),
-//                           ),
-//                         );
-//                       },
-//                     ),
-//                   ),
-                
-//                 ],);
-//   }
-
-//   Column _lstRating() {
-//     return Column(children: [
-//  const Text(
-//                     'Phim phổ biến',
-//                     style: TextStyle(
-//                       color: Colors.white,
-//                       fontSize: 17,
-//                     ),
-//                   ),
-//                   const SizedBox(
-//                     height: 37,
-//                   ),
-//                   SizedBox(
-//                     height: 160,
-//                     child: ListView.builder(
-//                       shrinkWrap: true,
-//                       scrollDirection: Axis.horizontal,
-//                       itemCount: upcomingMovies.length,
-//                       itemBuilder: (context, index) {
-//                         String mask;
-//                         if (index == 0) {
-//                           mask = "assets/images/mask_firstIndex.png";
-//                         } else if (index == upcomingMovies.length - 1) {
-//                           mask = "assets/images/mask_lastIndex.png";
-//                         } else {
-//                           mask = "assets/images/mask.png";
-//                         }
-//                         return GestureDetector(
-//                           onTap: () {
-//                             Get.toNamed(Routes.detailpage);
-//                           },
-//                           child: SizedBox(
-//                             height: 160,
-//                             width: 142,
-//                             child: MaskedImage(
-//                               asset: upcomingMovies[index].moviePoster,
-//                               mask: mask,
-//                             ),
-//                           ),
-//                         );
-//                       },
-//                     ),
-//                   ),
-                 
-//                  ],);
-//   }
 
   Column _lstPopular() {
     return Column(
@@ -191,7 +111,7 @@ class HomePage extends GetView<HomeController> {
                   }
                   return InkWell(
                     onTap: (() {
-                    controller.ontapMovie(controller.lstPopular[index].id!);
+                      controller.ontapMovie(controller.lstPopular[index].id!);
                     }),
                     child: Column(
                       children: [

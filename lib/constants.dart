@@ -8,6 +8,8 @@ const kYellow = Color(0xFFF2A33A);
 const kLightGreen = Color(0xFF09FBD3);
 const Color kGrey = Color(0xFF767680);
 const Color kCyan = Color(0xFF08F7FE);
+const Color kPurple = Color(0xff444473);
+
 
 Color getColorBorder(String email, String password) {
   Color color = Colors.transparent;

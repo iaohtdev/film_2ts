@@ -71,7 +71,7 @@ class LoginController extends GetxController
               nameController.text)
           .then((user) async {
         if (user != null) {
-          //keep login
+        
 
           Get.back();
           Get.toNamed(Routes.navigationbar);
