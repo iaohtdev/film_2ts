@@ -10,6 +10,10 @@ import 'package:movie_info/page/login/login_controller.dart';
 import 'package:movie_info/page/login/login_page.dart';
 import 'package:movie_info/page/navigation_bar/navigation_bar.dart';
 import 'package:movie_info/page/navigation_bar/navigation_controller.dart';
+
+import '../page/edit_profile/edit_profile.controller.dart';
+import '../page/edit_profile/edit_profile.dart';
+import '../page/profile/profile_controller.dart';
 part 'app_routes.dart';
 
 class AppPages {
@@ -60,6 +64,13 @@ class AppPages {
       binding: GetBinding(
         Routes.loginpage,
       ),
+    ),
+    GetPage(
+      name: Routes.editprofile,
+      page: () => EditProfile(),
+      binding: GetBinding(
+        Routes.editprofile,
+      ),
     )
   ];
 }
@@ -79,6 +90,7 @@ class GetBinding extends Bindings {
         Get.lazyPut(() => NavigationBarController());
         Get.lazyPut(() => LoginController());
         Get.lazyPut(() => HomeController());
+        Get.lazyPut(() => ProfileController());
 
         break;
       case Routes.homepage:
@@ -89,6 +101,9 @@ class GetBinding extends Bindings {
         break;
       case Routes.loginpage:
         Get.lazyPut(() => LoginController());
+        break;
+      case Routes.editprofile:
+        Get.lazyPut(() => EditProfileController());
         break;
       /* Example
       case ExamplePage.routeName:
