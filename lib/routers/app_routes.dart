@@ -6,5 +6,6 @@ abstract class Routes {
   static const navigationbar = '/navigationbar';
   static const detailpage = '/detailpage';
   static const loginpage = '/loginpage';
+  static const editprofile = '/editprofile';
   
 }
