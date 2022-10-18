@@ -61,7 +61,7 @@ class DetailMoviePage extends GetView<DetailMovieController> {
                                           return Center(
                                               child: Image.asset(
                                             "assets/gif/loading.gif",
-                                            height: 1,
+                                           scale: 10,
                                           ));
                                         default:
                                           if (snapshot.hasError)

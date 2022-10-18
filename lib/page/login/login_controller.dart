@@ -63,7 +63,7 @@ class LoginController extends GetxController
   }
 
   onRegister() async {
-    final isValid = formKeyLogin.currentState!.validate();
+    final isValid = formKeyRegister.currentState!.validate();
     if (textError == "email-already-in-use") {
       LoadingWidget.showLoading(Get.context!);
       await FirebaseFunction()
