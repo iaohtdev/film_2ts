@@ -1,4 +1,3 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
 // Colos that use in our app
@@ -25,4 +24,8 @@ Color getColorBorder(String email, String password) {
 unfocusKeyboard(BuildContext context ){
        FocusScope.of(context).unfocus();
   }
-
+String minutesToHours(int minutes) {
+    var d = Duration(minutes:minutes);
+    List<String> parts = d.toString().split(':');
+    return '${parts[0].padLeft(2, '0')}h ${parts[1].padLeft(2, '0')}m';
+}

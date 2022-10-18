@@ -1,9 +1,7 @@
-import 'dart:async';
 
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:movie_info/constants.dart';
 import 'package:movie_info/models/user.dart';
 import 'package:movie_info/page/auth/login_firebase.dart';
 import 'package:movie_info/routers/app_pages.dart';
@@ -34,8 +32,8 @@ class LoginController extends GetxController
     animationController =
         AnimationController(vsync: this, duration: animationDuration);
 
-    emailController.text = "";
-    passwordController.text = "";
+    emailController.text = "thoai@gmail.com";
+    passwordController.text = "12345678";
     nameController.text = "";
   }
 

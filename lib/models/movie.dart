@@ -1,147 +1,263 @@
-class Movie {
-  Movie(
-      {this.movieName = '',
-      this.moviePoster = '',
-      this.movieReleaseYear = '',
-      this.movieCategory = '',
-      this.movieDuration = '',
-      this.movieRating = '',
-      this.movieSinopsis = '',
-      this.movieCast = const []});
 
-  String movieName;
-  String moviePoster;
-  String movieReleaseYear;
-  String movieCategory;
-  String movieDuration;
-  String movieRating;
-  String movieSinopsis;
-  List<String> movieCast;
+class MovieModel {
+  bool? adult;
+  String? backdropPath;
+  BelongsToCollection? belongsToCollection;
+  int? budget;
+  List<Genres>? genres;
+  String? homepage;
+  int? id;
+  String? imdbId;
+  String? originalLanguage;
+  String? originalTitle;
+  String? overview;
+  double? popularity;
+  String? posterPath;
+  List<ProductionCompanies>? productionCompanies;
+  List<ProductionCountries>? productionCountries;
+  String? releaseDate;
+  int? revenue;
+  int? runtime;
+  List<SpokenLanguages>? spokenLanguages;
+  String? status;
+  String? tagline;
+  String? title;
+  bool? video;
+  dynamic voteAverage;
+  dynamic voteCount;
+
+  MovieModel(
+      {this.adult,
+      this.backdropPath,
+      this.belongsToCollection,
+      this.budget,
+      this.genres,
+      this.homepage,
+      this.id,
+      this.imdbId,
+      this.originalLanguage,
+      this.originalTitle,
+      this.overview,
+      this.popularity,
+      this.posterPath,
+      this.productionCompanies,
+      this.productionCountries,
+      this.releaseDate,
+      this.revenue,
+      this.runtime,
+      this.spokenLanguages,
+      this.status,
+      this.tagline,
+      this.title,
+      this.video,
+      this.voteAverage,
+      this.voteCount
+      
+      });
+
+  MovieModel.fromJson(Map<String, dynamic> json) {
+    adult = json['adult'];
+    backdropPath = json['backdrop_path'];
+    belongsToCollection = json['belongs_to_collection'] != null
+        ? new BelongsToCollection.fromJson(json['belongs_to_collection'])
+        : null;
+    budget = json['budget'];
+    if (json['genres'] != null) {
+      genres = <Genres>[];
+      json['genres'].forEach((v) {
+        genres!.add(new Genres.fromJson(v));
+      });
+    }
+    homepage = json['homepage'];
+    id = json['id'];
+    imdbId = json['imdb_id'];
+    originalLanguage = json['original_language'];
+    originalTitle = json['original_title'];
+    overview = json['overview'];
+    popularity = json['popularity'];
+    posterPath = json['poster_path'];
+    if (json['production_companies'] != null) {
+      productionCompanies = <ProductionCompanies>[];
+      json['production_companies'].forEach((v) {
+        productionCompanies!.add(new ProductionCompanies.fromJson(v));
+      });
+    }
+    if (json['production_countries'] != null) {
+      productionCountries = <ProductionCountries>[];
+      json['production_countries'].forEach((v) {
+        productionCountries!.add(new ProductionCountries.fromJson(v));
+      });
+    }
+    releaseDate = json['release_date'];
+    revenue = json['revenue'];
+    runtime = json['runtime'];
+    if (json['spoken_languages'] != null) {
+      spokenLanguages = <SpokenLanguages>[];
+      json['spoken_languages'].forEach((v) {
+        spokenLanguages!.add(new SpokenLanguages.fromJson(v));
+      });
+    }
+     voteAverage = json['vote_average'];
+     voteCount = json['vote_count'];
+
+    status = json['status'];
+    tagline = json['tagline'];
+    title = json['title'];
+    video = json['video'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['adult'] = this.adult;
+    data['backdrop_path'] = this.backdropPath;
+    if (this.belongsToCollection != null) {
+      data['belongs_to_collection'] = this.belongsToCollection!.toJson();
+    }
+    data['budget'] = this.budget;
+    if (this.genres != null) {
+      data['genres'] = this.genres!.map((v) => v.toJson()).toList();
+    }
+    data['homepage'] = this.homepage;
+    data['id'] = this.id;
+    data['imdb_id'] = this.imdbId;
+    data['original_language'] = this.originalLanguage;
+    data['original_title'] = this.originalTitle;
+    data['overview'] = this.overview;
+    data['popularity'] = this.popularity;
+    data['poster_path'] = this.posterPath;
+    if (this.productionCompanies != null) {
+      data['production_companies'] =
+          this.productionCompanies!.map((v) => v.toJson()).toList();
+    }
+    if (this.productionCountries != null) {
+      data['production_countries'] =
+          this.productionCountries!.map((v) => v.toJson()).toList();
+    }
+    data['release_date'] = this.releaseDate;
+    data['revenue'] = this.revenue;
+    data['runtime'] = this.runtime;
+    if (this.spokenLanguages != null) {
+      data['spoken_languages'] =
+          this.spokenLanguages!.map((v) => v.toJson()).toList();
+    }
+    data['status'] = this.status;
+    data['tagline'] = this.tagline;
+    data['title'] = this.title;
+    data['video'] = this.video;
+    data['vote_average'] = this.voteAverage;
+    data['vote_count'] = this.voteCount;
+    return data;
+  }
 }
 
-var newMovies = [
-  Movie(
-    movieName: 'Spider-Man: No Way Home',
-    moviePoster: 'assets/images/poster_1.jpg',
-    movieReleaseYear: '2021',
-    movieCategory: 'Action-Adventure-Fantasy',
-    movieDuration: '2h 28m',
-    movieRating: '4.7',
-    movieSinopsis:
-        'With Spider-Man\'s identity now revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear, forcing Peter to discover what it truly means to be Spider-Man.',
-    movieCast: ['Tom Holland', 'Zendaya', 'Benedict Cumberbatch'],
-  ),
-  Movie(
-    movieName: 'The Matrix Resurrections',
-    moviePoster: 'assets/images/poster_2.jpg',
-    movieReleaseYear: '2021',
-    movieCategory: 'Action-Sci-Fi',
-    movieDuration: '2h 28m',
-    movieRating: '3.5',
-    movieSinopsis:
-        'Return to a world of two realities: one, everyday life; the other, what lies behind it. To find out if his reality is a construct, to truly know himself, Mr. Anderson will have to choose to follow the white rabbit once more.',
-    movieCast: ['Keanu Reeves', 'Carrie-Anne Moss', 'Yahya Abdul-Mateen II'],
-  ),
-  Movie(
-    movieName: 'Eternals',
-    moviePoster: 'assets/images/poster_3.jpg',
-    movieReleaseYear: '2021',
-    movieCategory: 'Action-Adventure-Fantasy',
-    movieDuration: '2h 36m',
-    movieRating: '4.2',
-    movieSinopsis:
-        'The saga of the Eternals, a race of immortal beings who lived on Earth and shaped its history and civilizations.',
-    movieCast: ['Gemma Chan', 'Richard Madden', 'Angelina Jolie'],
-  ),
-    Movie(
-    movieName: 'Spider-Man: No Way Home',
-    moviePoster: 'assets/images/poster_1.jpg',
-    movieReleaseYear: '2021',
-    movieCategory: 'Action-Adventure-Fantasy',
-    movieDuration: '2h 28m',
-    movieRating: '4.7',
-    movieSinopsis:
-        'With Spider-Man\'s identity now revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear, forcing Peter to discover what it truly means to be Spider-Man.',
-    movieCast: ['Tom Holland', 'Zendaya', 'Benedict Cumberbatch'],
-  ),
-    Movie(
-    movieName: 'Spider-Man: No Way Home',
-    moviePoster: 'assets/images/poster_1.jpg',
-    movieReleaseYear: '2021',
-    movieCategory: 'Action-Adventure-Fantasy',
-    movieDuration: '2h 28m',
-    movieRating: '4.7',
-    movieSinopsis:
-        'With Spider-Man\'s identity now revealed, Peter asks Doctor Strange for help. When a spell goes wrong, dangerous foes from other worlds start to appear, forcing Peter to discover what it truly means to be Spider-Man.',
-    movieCast: ['Tom Holland', 'Zendaya', 'Benedict Cumberbatch'],
-  ),
-];
+class BelongsToCollection {
+  int? id;
+  String? name;
+  String? posterPath;
+  String? backdropPath;
 
-var upcomingMovies = [
-  Movie(
-    movieName: 'Aquaman',
-    moviePoster: 'assets/images/poster_2.jpg',
-    movieReleaseYear: '2018',
-    movieCategory: 'Action-Adventure-Fantasy',
-    movieDuration: '2h 23m',
-    movieRating: '4.3',
-    movieSinopsis:
-        'Arthur Curry, the human-born heir to the underwater kingdom of Atlantis, goes on a quest to prevent a war between the worlds of ocean and land.',
-    movieCast: ['Jason Momoa', 'Amber Heard', 'Willem Dafoe'],
-  ),
-  Movie(
-    movieName: 'Batman',
-    moviePoster: 'assets/images/poster_3.jpg',
-    movieReleaseYear: '2022',
-    movieCategory: 'Action-Crime-Drama',
-    movieDuration: '2h 56m',
-    movieRating: '4.7',
-    movieSinopsis:
-        'When the Riddler, a sadistic serial killer, begins murdering key political figures in Gotham, Batman is forced to investigate the city\'s hidden corruption and question his family\'s involvement.',
-    movieCast: ['Robert Pattinson', 'Zoë Kravitz', 'Jeffrey Wright'],
-  ),
-  Movie(
-    movieName: 'Sonic the Hedgehog 2',
-    moviePoster: 'assets/images/poster_1.jpg',
-    movieReleaseYear: '2022',
-    movieCategory: 'Animation-Action-Adventure',
-    movieDuration: '2h 2m',
-    movieRating: '4.5',
-    movieSinopsis:
-        'When the manic Dr Robotnik returns to Earth with a new ally, Knuckles the Echidna, Sonic and his new friend Tails is all that stands in their way.',
-    movieCast: ['Ben Schwartz', 'Idris Elba', 'Colleen O\'Shaughnessey'],
-  ),
-   Movie(
-    movieName: 'Aquaman',
-    moviePoster: 'assets/images/poster_2.jpg',
-    movieReleaseYear: '2018',
-    movieCategory: 'Action-Adventure-Fantasy',
-    movieDuration: '2h 23m',
-    movieRating: '4.3',
-    movieSinopsis:
-        'Arthur Curry, the human-born heir to the underwater kingdom of Atlantis, goes on a quest to prevent a war between the worlds of ocean and land.',
-    movieCast: ['Jason Momoa', 'Amber Heard', 'Willem Dafoe'],
-  ),
-   Movie(
-    movieName: 'Aquaman',
-    moviePoster: 'assets/images/poster_2.jpg',
-    movieReleaseYear: '2018',
-    movieCategory: 'Action-Adventure-Fantasy',
-    movieDuration: '2h 23m',
-    movieRating: '4.3',
-    movieSinopsis:
-        'Arthur Curry, the human-born heir to the underwater kingdom of Atlantis, goes on a quest to prevent a war between the worlds of ocean and land.',
-    movieCast: ['Jason Momoa', 'Amber Heard', 'Willem Dafoe'],
-  ),
-   Movie(
-    movieName: 'Aquaman',
-    moviePoster: 'assets/images/poster_2.jpg',
-    movieReleaseYear: '2018',
-    movieCategory: 'Action-Adventure-Fantasy',
-    movieDuration: '2h 23m',
-    movieRating: '4.3',
-    movieSinopsis:
-        'Arthur Curry, the human-born heir to the underwater kingdom of Atlantis, goes on a quest to prevent a war between the worlds of ocean and land.',
-    movieCast: ['Jason Momoa', 'Amber Heard', 'Willem Dafoe'],
-  ),
-];
+  BelongsToCollection({this.id, this.name, this.posterPath, this.backdropPath});
+
+  BelongsToCollection.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+    posterPath = json['poster_path'];
+    backdropPath = json['backdrop_path'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['poster_path'] = this.posterPath;
+    data['backdrop_path'] = this.backdropPath;
+    return data;
+  }
+}
+
+class Genres {
+  int? id;
+  String? name;
+
+  Genres({this.id, this.name});
+
+  Genres.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    return data;
+  }
+}
+
+class ProductionCompanies {
+  int? id;
+  String? logoPath;
+  String? name;
+  String? originCountry;
+
+  ProductionCompanies({this.id, this.logoPath, this.name, this.originCountry});
+
+  ProductionCompanies.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    logoPath = json['logo_path'];
+    name = json['name'];
+    originCountry = json['origin_country'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['logo_path'] = this.logoPath;
+    data['name'] = this.name;
+    data['origin_country'] = this.originCountry;
+    return data;
+  }
+}
+
+class ProductionCountries {
+  String? iso31661;
+  String? name;
+
+  ProductionCountries({this.iso31661, this.name});
+
+  ProductionCountries.fromJson(Map<String, dynamic> json) {
+    iso31661 = json['iso_3166_1'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['iso_3166_1'] = this.iso31661;
+    data['name'] = this.name;
+    return data;
+  }
+}
+
+class SpokenLanguages {
+  String? englishName;
+  String? iso6391;
+  String? name;
+
+  SpokenLanguages({this.englishName, this.iso6391, this.name});
+
+  SpokenLanguages.fromJson(Map<String, dynamic> json) {
+    englishName = json['english_name'];
+    iso6391 = json['iso_639_1'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['english_name'] = this.englishName;
+    data['iso_639_1'] = this.iso6391;
+    data['name'] = this.name;
+    return data;
+  }
+}
+
+

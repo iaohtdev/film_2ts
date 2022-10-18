@@ -23,7 +23,7 @@ class CustomOutlineButton extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(_radius),
           child: Container(
-            constraints:const BoxConstraints(minWidth: 88, minHeight: 48),
+            constraints:const BoxConstraints(minWidth: 35, minHeight: 35),
             child: Row(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,

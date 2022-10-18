@@ -43,7 +43,10 @@ dependencies:
   cloud_firestore: ^3.5.1
   shared_preferences: ^2.0.15
   email_validator: ^2.1.17
-
+  tmdb_api: ^2.1.4
+  widget_mask: ^1.0.0+0
+  cached_network_image:
+  palette_generator: 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
   flutter_test:

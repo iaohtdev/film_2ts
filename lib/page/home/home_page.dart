@@ -1,5 +1,6 @@
 import 'package:movie_info/page/auth/login_firebase.dart';
 import 'package:movie_info/page/home/home_page_controller.dart';
+import 'package:movie_info/provider/api_provider.dart';
 import 'package:movie_info/widget/background_gradient.dart';
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ import 'package:movie_info/models/movie.dart';
 import 'package:movie_info/page/home/components/masked_image.dart';
 import 'package:movie_info/page/home/components/search.dart';
 import 'package:movie_info/routers/app_pages.dart';
+import 'package:widget_mask/widget_mask.dart';
 
 class HomePage extends GetView<HomeController> {
   const HomePage({
@@ -42,135 +44,15 @@ class HomePage extends GetView<HomeController> {
                     const SizedBox(
                       height: 39,
                     ),
-                    const Text(
-                      'Phim mới',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 37,
-                    ),
-                    SizedBox(
-                      height: 160,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: newMovies.length,
-                        itemBuilder: (context, index) {
-                          String mask;
-                          if (index == 0) {
-                            mask = "assets/images/mask_firstIndex.png";
-                          } else if (index == newMovies.length - 1) {
-                            mask = "assets/images/mask_lastIndex.png";
-                          } else {
-                            mask = "assets/images/mask.png";
-                          }
-                          return InkWell(
-                            onTap: (() {
-                              Get.toNamed(Routes.detailpage);
-                            }),
-                            child: SizedBox(
-                              height: 160,
-                              width: 142,
-                              child: MaskedImage(
-                                asset: newMovies[index].moviePoster,
-                                mask: mask,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                    _lstPopular(),
                     const SizedBox(
                       height: 38,
                     ),
-                    const Text(
-                      'Phim phổ biến',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 37,
-                    ),
-                    SizedBox(
-                      height: 160,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: upcomingMovies.length,
-                        itemBuilder: (context, index) {
-                          String mask;
-                          if (index == 0) {
-                            mask = "assets/images/mask_firstIndex.png";
-                          } else if (index == upcomingMovies.length - 1) {
-                            mask = "assets/images/mask_lastIndex.png";
-                          } else {
-                            mask = "assets/images/mask.png";
-                          }
-                          return GestureDetector(
-                            onTap: () {
-                              Get.toNamed(Routes.detailpage);
-                            },
-                            child: SizedBox(
-                              height: 160,
-                              width: 142,
-                              child: MaskedImage(
-                                asset: upcomingMovies[index].moviePoster,
-                                mask: mask,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                  //  _lstRating(),
                     const SizedBox(
                       height: 38,
                     ),
-                    const Text(
-                      'Phim sắp chiếu',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 37,
-                    ),
-                    SizedBox(
-                      height: 160,
-                      child: ListView.builder(
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        itemCount: upcomingMovies.length,
-                        itemBuilder: (context, index) {
-                          String mask;
-                          if (index == 0) {
-                            mask = "assets/images/mask_firstIndex.png";
-                          } else if (index == upcomingMovies.length - 1) {
-                            mask = "assets/images/mask_lastIndex.png";
-                          } else {
-                            mask = "assets/images/mask.png";
-                          }
-                          return GestureDetector(
-                            onTap: () {
-                              Get.toNamed(Routes.detailpage);
-                            },
-                            child: SizedBox(
-                              height: 160,
-                              width: 142,
-                              child: MaskedImage(
-                                asset: upcomingMovies[index].moviePoster,
-                                mask: mask,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                  // _lstUpComing(),
                     const SizedBox(
                       height: 100,
                     ),
@@ -181,6 +63,158 @@ class HomePage extends GetView<HomeController> {
           ),
         ],
       ),
+    );
+  }
+
+//   Column _lstUpComing() {
+//     return Column(children: [
+// const Text(
+//                     'Phim sắp chiếu',
+//                     style: TextStyle(
+//                       color: Colors.white,
+//                       fontSize: 17,
+//                     ),
+//                   ),
+//                   const SizedBox(
+//                     height: 37,
+//                   ),
+//                   SizedBox(
+//                     height: 160,
+//                     child: ListView.builder(
+//                       shrinkWrap: true,
+//                       scrollDirection: Axis.horizontal,
+//                       itemCount: upcomingMovies.length,
+//                       itemBuilder: (context, index) {
+//                         String mask;
+//                         if (index == 0) {
+//                           mask = "assets/images/mask_firstIndex.png";
+//                         } else if (index == upcomingMovies.length - 1) {
+//                           mask = "assets/images/mask_lastIndex.png";
+//                         } else {
+//                           mask = "assets/images/mask.png";
+//                         }
+//                         return GestureDetector(
+//                           onTap: () {
+//                             Get.toNamed(Routes.detailpage);
+//                           },
+//                           child: SizedBox(
+//                             height: 160,
+//                             width: 142,
+//                             child: MaskedImage(
+//                               asset: upcomingMovies[index].moviePoster,
+//                               mask: mask,
+//                             ),
+//                           ),
+//                         );
+//                       },
+//                     ),
+//                   ),
+                
+//                 ],);
+//   }
+
+//   Column _lstRating() {
+//     return Column(children: [
+//  const Text(
+//                     'Phim phổ biến',
+//                     style: TextStyle(
+//                       color: Colors.white,
+//                       fontSize: 17,
+//                     ),
+//                   ),
+//                   const SizedBox(
+//                     height: 37,
+//                   ),
+//                   SizedBox(
+//                     height: 160,
+//                     child: ListView.builder(
+//                       shrinkWrap: true,
+//                       scrollDirection: Axis.horizontal,
+//                       itemCount: upcomingMovies.length,
+//                       itemBuilder: (context, index) {
+//                         String mask;
+//                         if (index == 0) {
+//                           mask = "assets/images/mask_firstIndex.png";
+//                         } else if (index == upcomingMovies.length - 1) {
+//                           mask = "assets/images/mask_lastIndex.png";
+//                         } else {
+//                           mask = "assets/images/mask.png";
+//                         }
+//                         return GestureDetector(
+//                           onTap: () {
+//                             Get.toNamed(Routes.detailpage);
+//                           },
+//                           child: SizedBox(
+//                             height: 160,
+//                             width: 142,
+//                             child: MaskedImage(
+//                               asset: upcomingMovies[index].moviePoster,
+//                               mask: mask,
+//                             ),
+//                           ),
+//                         );
+//                       },
+//                     ),
+//                   ),
+                 
+//                  ],);
+//   }
+
+  Column _lstPopular() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          'Phổ biến',
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 17,
+          ),
+        ),
+        const SizedBox(
+          height: 37,
+        ),
+        Obx(() => SizedBox(
+              height: 160,
+              child: ListView.builder(
+                shrinkWrap: true,
+                scrollDirection: Axis.horizontal,
+                itemCount: controller.lstPopular.length,
+                itemBuilder: (context, index) {
+                  String mask;
+                  if (index == 0) {
+                    mask = "assets/images/mask_firstIndex.png";
+                  } else if (index == controller.lstPopular.length - 1) {
+                    mask = "assets/images/mask_lastIndex.png";
+                  } else {
+                    mask = "assets/images/mask.png";
+                  }
+                  return InkWell(
+                    onTap: (() {
+                    controller.ontapMovie(controller.lstPopular[index].id!);
+                    }),
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: 160,
+                          width: 142,
+                          child: WidgetMask(
+                              blendMode: BlendMode.srcATop,
+                              childSaveLayer: true,
+                              mask: Image.network(
+                                BASE_URL +
+                                    controller.lstPopular[index].posterPath!,
+                                fit: BoxFit.cover,
+                              ),
+                              child: Image.asset(mask)),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            )),
+      ],
     );
   }
 
