@@ -48,8 +48,7 @@ dependencies:
   cached_network_image:
   palette_generator: 
   intl: ^0.17.0
-  palette_generator:
-  dotted_border: ^2.0.0+2
+  youtube_player_flutter: 
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
   flutter_test:

@@ -59,6 +59,8 @@ class FirebaseFunction {
       if (user != null) {
         uid = user.uid;
         email = user.email!;
+        
+        
       }
     } on FirebaseAuthException catch (e) {
 

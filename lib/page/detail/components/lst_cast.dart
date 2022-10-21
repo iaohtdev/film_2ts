@@ -2,6 +2,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movie_info/constants.dart';
 import 'package:movie_info/page/detail/detail_controller.dart';
 import 'package:movie_info/provider/api_provider.dart';
 
@@ -49,12 +50,12 @@ class ListCast extends GetView<DetailMovieController> {
                             placeholder: (context, url) => Container(
                               height: 60,
                               width: Get.width,
+                              color: kBlack.withOpacity(0.5),
+                            ),
+                            errorWidget: (context, url, error) => Container(
                               color: Colors.grey,
-                            ),
-                            errorWidget: (context, url, error) => Image.asset(
-                              "assets/gif/loading.gif",
-                              height: 1,
-                            ),
+
+                              child: Icon(Icons.error_outline,))
                           ),
                         ),
                       ),

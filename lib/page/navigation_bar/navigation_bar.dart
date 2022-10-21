@@ -6,7 +6,6 @@ import 'package:movie_info/page/favorite/favorite_page.dart';
 import 'package:movie_info/page/home/home_page.dart';
 import 'package:movie_info/page/navigation_bar/navigation_controller.dart';
 import 'package:movie_info/page/nofication/nofication_page.dart';
-import 'package:movie_info/page/profile/profile_page.dart';
 
 class NavigationBarWidget extends GetView<NavigationBarController> {
   const NavigationBarWidget({Key? key}) : super(key: key);
@@ -15,7 +14,7 @@ class NavigationBarWidget extends GetView<NavigationBarController> {
     HomePage(),
     FavoritePage(),
     NoficationPage(),
-    ProfilePage()
+    // ProfilePage()
   ];
   @override
   Widget build(BuildContext context) {
@@ -94,20 +93,20 @@ class NavigationBarWidget extends GetView<NavigationBarController> {
                           ),
                     label: '',
                   ),
-                  BottomNavigationBarItem(
-                    icon: controller.selectedIndex.value == 3
-                        ? SvgPicture.asset(
-                            "assets/icons/icon-profile.svg",
-                            height: 25,
-                            color: Colors.white,
-                          )
-                        : SvgPicture.asset(
-                            "assets/icons/icon-profile_outline.svg",
-                            height: 25,
-                            color: Colors.white,
-                          ),
-                    label: '',
-                  ),
+                  // BottomNavigationBarItem(
+                  //   icon: controller.selectedIndex.value == 3
+                  //       ? SvgPicture.asset(
+                  //           "assets/icons/icon-profile.svg",
+                  //           height: 25,
+                  //           color: Colors.white,
+                  //         )
+                  //       : SvgPicture.asset(
+                  //           "assets/icons/icon-profile_outline.svg",
+                  //           height: 25,
+                  //           color: Colors.white,
+                  //         ),
+                  //   label: '',
+                  // ),
                 ],
               ),
             )),

@@ -31,14 +31,7 @@ class LstRecommend extends GetView<DetailMovieController> {
                     scrollDirection: Axis.horizontal,
                     itemCount: controller.lstRcm.length,
                     itemBuilder: (context, index) {
-                      String mask;
-                      if (index == 0) {
-                        mask = "assets/images/mask_firstIndex.png";
-                      } else if (index == controller.lstRcm.length - 1) {
-                        mask = "assets/images/mask_lastIndex.png";
-                      } else {
-                        mask = "assets/images/mask.png";
-                      }
+                    
                       return GestureDetector(
                         onTap: (() {
                           Get.offAllNamed(Routes.detailpage,arguments: controller.lstRcm[index].id);

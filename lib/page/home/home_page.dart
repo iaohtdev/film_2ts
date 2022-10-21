@@ -1,6 +1,10 @@
-import 'package:movie_info/page/auth/login_firebase.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:movie_info/constants.dart';
+import 'package:movie_info/models/movie.dart';
+import 'package:movie_info/models/tv.dart';
 import 'package:movie_info/page/home/home_page_controller.dart';
 import 'package:movie_info/provider/api_provider.dart';
+import 'package:movie_info/routers/app_pages.dart';
 import 'package:movie_info/widget/background_gradient.dart';
 
 import 'package:flutter/material.dart';
@@ -27,7 +31,8 @@ class HomePage extends GetView<HomeController> {
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: FutureBuilder<String>(
                   future: controller.fechData(),
-                  builder: (BuildContext context, AsyncSnapshot<String>snapshot ) {
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
                       return Center(
                           child: Image.asset(
@@ -55,15 +60,32 @@ class HomePage extends GetView<HomeController> {
                             ),
                             const SearchFieldWidget(),
                             const SizedBox(
-                              height: 39,
+                              height: 35,
                             ),
-                            _lstPopular(),
+                            _lstMovie(
+                                lst: controller.lstPopular, title: 'Phổ biến'),
+
+                            _lstMovie(
+                                lst: controller.lstNowPlaying,
+                                title: "Đang chiếu tại rap"),
+
+                            _lstMovie(
+                                lst: controller.lstTopRate,
+                                title: "Phim có xếp hạng cao"),
+                            _lstMovie(
+                                lst: controller.lstUpComing,
+                                title: "Sắp chiếu"),
+                                 _lstTv(
+                                title: "Seri phim phổ biến",
+                                lst: controller.lstTvPopular),
+                                  _lstTv(
+                                title: "Seri phim có xếp hạng cao",
+                                lst: controller.lstTvTopRate),
+                           
+                   
+                           
                             const SizedBox(
-                              height: 38,
-                            ),
-                            //  _lstRating(),
-                            const SizedBox(
-                              height: 38,
+                              height: 20,
                             ),
                             // _lstUpComing(),
                             const SizedBox(
@@ -77,64 +99,6 @@ class HomePage extends GetView<HomeController> {
           ),
         ],
       ),
-    );
-  }
-
-  Column _lstPopular() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'Phổ biến',
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: 17,
-          ),
-        ),
-        const SizedBox(
-          height: 37,
-        ),
-        Obx(() => SizedBox(
-              height: 160,
-              child: ListView.builder(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemCount: controller.lstPopular.length,
-                itemBuilder: (context, index) {
-                  String mask;
-                  if (index == 0) {
-                    mask = "assets/images/mask_firstIndex.png";
-                  } else if (index == controller.lstPopular.length - 1) {
-                    mask = "assets/images/mask_lastIndex.png";
-                  } else {
-                    mask = "assets/images/mask.png";
-                  }
-                  return InkWell(
-                    onTap: (() {
-                      controller.ontapMovie(controller.lstPopular[index].id!);
-                    }),
-                    child: Column(
-                      children: [
-                        SizedBox(
-                          height: 160,
-                          width: 142,
-                          child: WidgetMask(
-                              blendMode: BlendMode.srcATop,
-                              childSaveLayer: true,
-                              mask: Image.network(
-                                BASE_URL +
-                                    controller.lstPopular[index].posterPath!,
-                                fit: BoxFit.cover,
-                              ),
-                              child: Image.asset(mask)),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-              ),
-            )),
-      ],
     );
   }
 
@@ -174,7 +138,7 @@ class HomePage extends GetView<HomeController> {
         Expanded(
             child: InkWell(
           onTap: () {
-            FirebaseFunction().signOut();
+           Get.toNamed(Routes.profile,arguments: controller.userModel.value);
           },
           child: Container(
             height: 40,
@@ -186,6 +150,121 @@ class HomePage extends GetView<HomeController> {
                     fit: BoxFit.cover)),
           ),
         ))
+      ],
+    );
+  }
+
+  Column _lstMovie({required String title, required List<MovieModel> lst}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+          height: 160,
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: lst.length,
+            itemBuilder: (context, index) {
+              String mask;
+              if (index == 0) {
+                mask = "assets/images/mask_firstIndex.png";
+              } else if (index == lst.length - 1) {
+                mask = "assets/images/mask_lastIndex.png";
+              } else {
+                mask = "assets/images/mask.png";
+              }
+              return InkWell(
+                onTap: (() {
+                  controller.ontapMovie(lst[index].id!);
+                }),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 160,
+                      width: 142,
+                      child: WidgetMask(
+                          blendMode: BlendMode.srcATop,
+                          childSaveLayer: true,
+                          mask: Image.network(
+                            BASE_URL + lst[index].posterPath!,
+                            fit: BoxFit.cover,
+                          ),
+                          child: Image.asset(mask)),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
+      ],
+    );
+  }
+
+  Column _lstTv({required String title, required List<TvSeriModel> lst}) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+              color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(
+          height: 10,
+        ),
+        SizedBox(
+          height: 220,
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: lst.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                onTap: (() {
+                  controller.ontapMovie(lst[index].id!);
+                }),
+                child: Column(
+                  children: [
+                    Container(
+                      margin: EdgeInsets.symmetric(horizontal: 5),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: CachedNetworkImage(
+                          height: 220,
+                          width: 150,
+                          imageUrl: '$BASE_URL${lst[index].posterPath}',
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Container(
+                            height: 220,
+                            width: 150,
+                            color: kBlack.withOpacity(0.5),
+                          ),
+                          errorWidget: (context, url, error) =>
+                              Icon(Icons.error),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+        ),
+        const SizedBox(
+          height: 20,
+        ),
       ],
     );
   }

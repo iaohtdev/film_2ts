@@ -5,6 +5,7 @@ import 'package:movie_info/models/movie.dart';
 import 'package:movie_info/models/trailler.dart';
 import 'package:movie_info/provider/api_provider.dart';
 import 'package:palette_generator/palette_generator.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class DetailMovieController extends GetxController {
   Rx<MovieModel> movieModel = MovieModel().obs;
@@ -14,10 +15,16 @@ class DetailMovieController extends GetxController {
   RxList<CastAndCrew> lstCrew = <CastAndCrew>[].obs;
   PaletteGenerator? paletteGenerator;
   int idMovie = Get.arguments;
-
+  late YoutubePlayerController youtubePlayerController;
   @override
   void onInit() {
     super.onInit();
+  }
+
+  void dispose() {
+    youtubePlayerController.dispose();
+
+    super.dispose();
   }
 
   Future<String> getDataMovie() async {
@@ -37,6 +44,8 @@ class DetailMovieController extends GetxController {
     });
     await ApiProvider().getTrailler(idMovie).then((respone) async {
       trailerModel.value = await Trailer.fromJson(respone["results"][0]);
+
+    
 
       print("thoai" + trailerModel.value.key!);
     });

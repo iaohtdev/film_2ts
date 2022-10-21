@@ -12,6 +12,38 @@ class ApiProvider {
     return popularMovie;
   }
 
+  Future getTopRate() async {
+    Map topRate = await TmdbService().tmdbWithCustomLog.v3.movies.getTopRated();
+    return topRate;
+  }
+
+  Future getNowPlaying() async {
+    Map nowPlaying =
+        await TmdbService().tmdbWithCustomLog.v3.movies.getNowPlaying();
+    return nowPlaying;
+  }
+
+  Future getUpComing() async {
+    Map upComing =
+        await TmdbService().tmdbWithCustomLog.v3.movies.getUpcoming();
+    return upComing;
+  }
+
+  Future getTvOnTheAir() async {
+    Map upComing = await TmdbService().tmdbWithCustomLog.v3.tv.getOnTheAir();
+    return upComing;
+  }
+
+  Future getTvPopular() async {
+    Map tvPopular = await TmdbService().tmdbWithCustomLog.v3.tv.getPopular();
+    return tvPopular;
+  }
+
+  Future getTvTopRate() async {
+    Map tvTopRate = await TmdbService().tmdbWithCustomLog.v3.tv.getTopRated();
+    return tvTopRate;
+  }
+
   Future getDetailMovie(int idMovie) async {
     Map detailMovie = await TmdbService()
         .tmdbWithCustomLog

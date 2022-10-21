@@ -5,6 +5,7 @@ import 'package:movie_info/constants.dart';
 import 'package:movie_info/page/detail/components/info_movie.dart';
 import 'package:movie_info/page/detail/components/lst_cast.dart';
 import 'package:movie_info/page/detail/components/lst_rcm.dart';
+import 'package:movie_info/page/detail/components/play_trailer.dart';
 import 'package:movie_info/page/detail/detail_controller.dart';
 import 'package:movie_info/provider/api_provider.dart';
 import 'package:movie_info/widget/icon_back.dart';
@@ -83,11 +84,22 @@ class DetailMoviePage extends GetView<DetailMovieController> {
                                                   colors: [
                                                     kPink.withOpacity(0.4),
                                                     kLightGreen.withOpacity(0.4)
-                                                  ],
+                                                  ]
                                                 ),
                                               ),
                                               child: IconButton(
-                                                  onPressed: () {},
+                                                  onPressed: () {
+                                                    Get.lazyPut(() => PlayTrailerController());
+                                                  Get.to(
+                                                    ()=>    PlayTrailerPage(),
+                                                        arguments: controller
+                                                            .trailerModel
+                                                            .value
+                                                            .key,
+                                                            
+                                                          
+                                                            );
+                                                  },
                                                   icon: Icon(
                                                     Icons.play_arrow,
                                                     color: Colors.white,
@@ -165,7 +177,6 @@ class DetailMoviePage extends GetView<DetailMovieController> {
                       SizedBox(
                         height: 30,
                       ),
-                 
                       LstRecommend(),
                       SizedBox(
                         height: 100,
@@ -211,7 +222,7 @@ class DetailMoviePage extends GetView<DetailMovieController> {
                         placeholder: (context, url) => Container(
                           height: 220,
                           width: 150,
-                          color: Colors.grey,
+                          color: kBlack.withOpacity(0.5),
                         ),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       ),

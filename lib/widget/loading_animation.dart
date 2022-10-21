@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:movie_info/constants.dart';
 
 class LoadingWidget{
 
