@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -8,7 +6,6 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:movie_info/models/user.dart';
-
 import '../../routers/app_pages.dart';
 
 class ProfileController extends GetxController {
@@ -48,11 +45,10 @@ class ProfileController extends GetxController {
     }
   }
 
-  onDateTimeChanged(DateTime date){
+  onDateTimeChanged(DateTime date) {
     selectedDate.value = date;
-    dateController.text =DateFormat("dd/MM/yyyy").format(selectedDate.value);
+    dateController.text = DateFormat("dd/MM/yyyy").format(selectedDate.value);
   }
-
 
   updateUser() async {
     await FirebaseFirestore.instance
@@ -64,32 +60,39 @@ class ProfileController extends GetxController {
           .collection('users')
           .doc(value.docs[0].id)
           .update({
-            "name": nameController.text,
-            "phone": phoneController.text,
-            "datetime": dateController.text,
-            "photoUrl": urlPhoto.toString()
-            
-          });
+        "name": nameController.text,
+        "phone": phoneController.text,
+        "datetime": dateController.text,
+        "photoUrl": urlPhoto.toString()
+      });
     });
-    
+
     Get.offAllNamed(Routes.navigationbar);
   }
-  
 
-   
-  Future getImage()async{
-
+  Future getImage() async {
     final image = await ImagePicker().pickImage(source: ImageSource.gallery);
 
-    if(image==null) return;
+    if (image == null) return;
     final imageTemporary = File(image.path);
-   
-      urlPhoto =imageTemporary;
-      this.image = imageTemporary;
 
-    
+    urlPhoto = imageTemporary;
+    this.image = imageTemporary;
 
-      update();
+    update();
   }
+
+  // onTapPrivacy() async {
+
+  //   var url = Uri.parse("https://www.themoviedb.org/privacy-policy");
+  //   if (await canLaunchUrl(url))
+  //     await launchUrl(url);
+  //   else
+     
+  //     throw "Could not launch $url";
+  // }
+
+
+
 
 }

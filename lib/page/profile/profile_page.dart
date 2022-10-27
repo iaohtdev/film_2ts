@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_info/constants.dart';
 import 'package:movie_info/page/auth/login_firebase.dart';
+import 'package:movie_info/page/profile/components/privacy.dart';
+import 'package:movie_info/page/profile/components/terms.dart';
 import 'package:movie_info/page/profile/profile_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie_info/widget/icon_back.dart';
@@ -115,9 +117,17 @@ class ProfilePage extends GetView<ProfileController> {
             ontap: () {}),
         separateLine(),
         itemBody('assets/icons/icon-policy.svg', 'Chính sách bảo mật',
-            ontap: () {}),
+            ontap: () {
+
+               Get.to(()=>PrivacyPage());
+            }),
         itemBody(
-            'assets/icons/icon-condition.svg', 'Các điều khoản và điều kiện'),
+            'assets/icons/icon-condition.svg', 'Các điều khoản và điều kiện',
+            
+            ontap: (){
+                 Get.to(()=>TermsOfUse());
+            }
+            ),
         separateLine(),
         _itemLanguage('assets/icons/icon-language.svg', 'Ngôn ngữ'),
         itemBody('assets/icons/icon-logout.svg', 'Đăng xuất', ontap: () {
