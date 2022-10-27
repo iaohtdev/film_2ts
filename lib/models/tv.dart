@@ -20,7 +20,7 @@ class TvSeriModel {
   String? originalLanguage;
   String? originalName;
   String? overview;
-  double? popularity;
+  dynamic popularity;
   String? posterPath;
   List<ProductionCompanies>? productionCompanies;
   List<ProductionCountries>? productionCountries;

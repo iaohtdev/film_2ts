@@ -14,7 +14,6 @@ class NavigationBarController extends GetxController {
   ontapNavi(int index) {
     selectedIndex.value = index;
 
-    print(selectedIndex.value);
   }
 
 }

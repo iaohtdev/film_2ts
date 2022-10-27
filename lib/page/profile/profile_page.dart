@@ -84,7 +84,7 @@ class ProfilePage extends GetView<ProfileController> {
                 decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     image: DecorationImage(
-                        image: AssetImage("assets/images/poster_2.jpg"),
+                        image: AssetImage("assets/images/logo.png"),
                         fit: BoxFit.cover)),
               ),
             ),

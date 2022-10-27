@@ -38,7 +38,11 @@ class FirebaseFunction {
       "password": password.trim(),
       "name": name.trim(),
       "photoUrl": "",
-      "uid": uid
+      "uid": uid,
+      "datetime": "",
+      "phone": "",
+    }).then((value){
+
     });
   }
 

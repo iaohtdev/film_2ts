@@ -4,6 +4,8 @@ class UserModel {
   String? photoUrl;
   String? name;
   String? phone;
+  String? date;
+  
   UserModel({
     this.uid,
     this.email,
@@ -18,6 +20,7 @@ class UserModel {
     photoUrl = json['photoUrl'];
     name = json['name'];
     phone = json['phone'];
+    date = json['datetime'];
   }
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
@@ -26,6 +29,7 @@ class UserModel {
     data['photoUrl'] = this.photoUrl;
     data['name'] = this.name;
     data['phone'] = this.phone;
+    data['datetime'] = this.date;
 
     return data;
   }

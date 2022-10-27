@@ -22,19 +22,20 @@ class HomeController extends GetxController {
   final loginController = Get.put(LoginController());
   final naviController = Get.put(NavigationBarController());
   @override
-  void onInit()async {
+  void onInit() async {
     super.onInit();
+    await fechData();
   }
 
   Future<String> fechData() async {
     await getDocId();
     await getListPopularMovie();
     await getListTopRateMovie();
+    await getListUpComing();
     await getListNowPlaying();
-    // await getListUpComing();
-  await getListTvPopular();
-  await getListTvTopRate();
+    await getListTvPopular();
 
+    await getListTvTopRate();
     return Future.value("Data download successfully");
   }
 
@@ -79,38 +80,32 @@ class HomeController extends GetxController {
       for (var item in respone["results"]) {
         lstUpComing.add(MovieModel.fromJson(item));
       }
-      
     });
   }
 
-   getListTvOnTheAir() async {
+  getListTvOnTheAir() async {
     await ApiProvider().getTvOnTheAir().then((respone) {
-
       for (var item in respone["results"]) {
         lstTvOnTheAir.add(TvSeriModel.fromJson(item));
       }
-      
     });
   }
-   getListTvPopular() async {
-    await ApiProvider().getTvPopular().then((respone) {
 
+  getListTvPopular() async {
+    await ApiProvider().getTvPopular().then((respone) {
       for (var item in respone["results"]) {
         lstTvPopular.add(TvSeriModel.fromJson(item));
       }
-      
     });
   }
-   getListTvTopRate() async {
-    await ApiProvider().getTvTopRate().then((respone) {
 
+  getListTvTopRate() async {
+    await ApiProvider().getTvTopRate().then((respone) {
       for (var item in respone["results"]) {
         lstTvTopRate.add(TvSeriModel.fromJson(item));
       }
-      
     });
   }
-
 
   ontapMovie(int id) async {
     Get.toNamed(Routes.detailpage, arguments: id);

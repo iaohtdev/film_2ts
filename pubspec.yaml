@@ -41,6 +41,7 @@ dependencies:
   firebase_core: ^1.24.0
   firebase_auth: ^3.3.18
   cloud_firestore: ^3.5.1
+  firebase_storage: ^10.3.7
   shared_preferences: ^2.0.15
   email_validator: ^2.1.17
   tmdb_api: ^2.1.4
@@ -49,6 +50,8 @@ dependencies:
   palette_generator: 
   intl: ^0.17.0
   youtube_player_flutter: 
+  image_picker: ^0.8.6
+  path_provider: ^2.0.11
 dev_dependencies:
   flutter_launcher_icons: ^0.10.0
   flutter_test:

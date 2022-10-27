@@ -25,76 +25,80 @@ class HomePage extends GetView<HomeController> {
       child: Stack(
         children: [
           const BackGroundGradient(),
-          SafeArea(
-            bottom: false,
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              child: FutureBuilder<String>(
-                  future: controller.fechData(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<String> snapshot) {
-                    if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(
-                          child: Image.asset(
-                        "assets/gif/loading.gif",
-                        scale: 2,
-                      ));
-                    } else if (snapshot.hasError) {
-                      return Center(
-                          child: Text(
-                        "Có lỗi trong quá trình tải dữ liệu",
-                        style: TextStyle(color: Colors.white),
-                      ));
-                    } else
-                      return SingleChildScrollView(
-                        primary: true,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(
-                              height: 24,
-                            ),
-                            _header(),
-                            const SizedBox(
-                              height: 30,
-                            ),
-                            const SearchFieldWidget(),
-                            const SizedBox(
-                              height: 35,
-                            ),
-                            _lstMovie(
-                                lst: controller.lstPopular, title: 'Phổ biến'),
+          GestureDetector(
+            onTap: () {
+              unfocusKeyboard(context);
+            },
+            child: SafeArea(
+              bottom: false,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                child: FutureBuilder<String>(
+                    future: controller.fechData(),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Center(
+                            child: Image.asset(
+                          "assets/gif/loading.gif",
+                          scale: 2,
+                        ));
+                      } else if (snapshot.hasError) {
+                        return Center(
+                            child: Text(
+                          "Có lỗi trong quá trình tải dữ liệu",
+                          style: TextStyle(color: Colors.white),
+                        ));
+                      } else
+                        return SingleChildScrollView(
+                          primary: true,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(
+                                height: 24,
+                              ),
+                              _header(),
+                              const SizedBox(
+                                height: 30,
+                              ),
+                              const SearchFieldWidget(),
+                              const SizedBox(
+                                height: 35,
+                              ),
+                              _lstMovie(
+                                  lst: controller.lstPopular,
+                                  title: 'Phổ biến'),
+                              _lstMovie(
+                                  lst: controller.lstUpComing,
+                                  title: "Sắp chiếu"),
+                              // _lstMovie(
+                              //     lst: controller.lstNowPlaying,
+                              //     title: "Đang chiếu tại rap"),
 
-                            _lstMovie(
-                                lst: controller.lstNowPlaying,
-                                title: "Đang chiếu tại rap"),
+                              _lstMovie(
+                                  lst: controller.lstTopRate,
+                                  title: "Phim có xếp hạng cao"),
 
-                            _lstMovie(
-                                lst: controller.lstTopRate,
-                                title: "Phim có xếp hạng cao"),
-                            _lstMovie(
-                                lst: controller.lstUpComing,
-                                title: "Sắp chiếu"),
-                                 _lstTv(
-                                title: "Seri phim phổ biến",
-                                lst: controller.lstTvPopular),
-                                  _lstTv(
-                                title: "Seri phim có xếp hạng cao",
-                                lst: controller.lstTvTopRate),
-                           
-                   
-                           
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            // _lstUpComing(),
-                            const SizedBox(
-                              height: 100,
-                            ),
-                          ],
-                        ),
-                      );
-                  }),
+                              _lstTv(
+                                  title: "Series phim phổ biến",
+                                  lst: controller.lstTvPopular),
+                              _lstTv(
+                                  title: "Series phim có xếp hạng cao",
+                                  lst: controller.lstTvTopRate),
+
+                              const SizedBox(
+                                height: 20,
+                              ),
+                              // _lstUpComing(),
+                              const SizedBox(
+                                height: 100,
+                              ),
+                            ],
+                          ),
+                        );
+                    }),
+              ),
             ),
           ),
         ],
@@ -138,7 +142,7 @@ class HomePage extends GetView<HomeController> {
         Expanded(
             child: InkWell(
           onTap: () {
-           Get.toNamed(Routes.profile,arguments: controller.userModel.value);
+            Get.toNamed(Routes.profile, arguments: controller.userModel.value);
           },
           child: Container(
             height: 40,
@@ -146,7 +150,7 @@ class HomePage extends GetView<HomeController> {
             decoration: const BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                    image: AssetImage("assets/images/poster_2.jpg"),
+                    image: AssetImage("assets/images/logo.png"),
                     fit: BoxFit.cover)),
           ),
         ))

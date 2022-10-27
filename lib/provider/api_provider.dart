@@ -73,4 +73,13 @@ class ApiProvider {
         );
     return trailler;
   }
+
+
+    Future searchMovie(String query) async {
+    Map search = await TmdbService().tmdbWithCustomLog.v3.search.queryMovies(
+          query,
+          region: "vi"
+        );
+    return search;
+  }
 }

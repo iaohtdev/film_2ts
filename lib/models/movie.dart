@@ -11,7 +11,7 @@ class MovieModel {
   String? originalLanguage;
   String? originalTitle;
   String? overview;
-  double? popularity;
+  dynamic popularity;
   String? posterPath;
   List<ProductionCompanies>? productionCompanies;
   List<ProductionCountries>? productionCountries;

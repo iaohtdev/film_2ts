@@ -1,14 +1,17 @@
+
+
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:movie_info/models/user.dart';
 
 import '../../routers/app_pages.dart';
 
 class ProfileController extends GetxController {
-
   Rx<UserModel> userModel = UserModel().obs;
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
@@ -16,26 +19,21 @@ class ProfileController extends GetxController {
   TextEditingController dateController = TextEditingController();
   late PageController pageController = PageController();
   final formKey = GlobalKey<FormState>();
-  DateTime selectedDate = DateTime.now();
-  
+  Rx<DateTime> selectedDate = DateTime.now().obs;
+  File? image;
+  File? urlPhoto;
   @override
-  void onInit()async {
+  void onInit() async {
     super.onInit();
-    userModel.value  =Get.arguments;
-await  getDataUser();
+    userModel.value = Get.arguments;
+    await getDataUser();
   }
 
-getDataUser(){
-
-  nameController.text = userModel.value.name!;
-  emailController.text = userModel.value.email!;
-
-}
-
-  void onAddButtonTapped(int index) {
-    pageController.animateToPage(index,
-        duration: Duration(milliseconds: 500), curve: Curves.elasticInOut);
-
+  getDataUser() {
+    nameController.text = userModel.value.name!;
+    emailController.text = userModel.value.email!;
+    phoneController.text = userModel.value.phone!;
+    dateController.text = userModel.value.date!;
   }
 
   goToEdit() {
@@ -43,9 +41,55 @@ getDataUser(){
       Routes.editprofile,
     );
   }
-   validName(String? name) {
+
+  validName(String? name) {
     if (name == null || name == "") {
       return "Tên không được để trống";
     }
   }
+
+  onDateTimeChanged(DateTime date){
+    selectedDate.value = date;
+    dateController.text =DateFormat("dd/MM/yyyy").format(selectedDate.value);
+  }
+
+
+  updateUser() async {
+    await FirebaseFirestore.instance
+        .collection("users")
+        .where("uid", isEqualTo: userModel.value.uid)
+        .get()
+        .then((value) async {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(value.docs[0].id)
+          .update({
+            "name": nameController.text,
+            "phone": phoneController.text,
+            "datetime": dateController.text,
+            "photoUrl": urlPhoto.toString()
+            
+          });
+    });
+    
+    Get.offAllNamed(Routes.navigationbar);
+  }
+  
+
+   
+  Future getImage()async{
+
+    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+
+    if(image==null) return;
+    final imageTemporary = File(image.path);
+   
+      urlPhoto =imageTemporary;
+      this.image = imageTemporary;
+
+    
+
+      update();
+  }
+
 }

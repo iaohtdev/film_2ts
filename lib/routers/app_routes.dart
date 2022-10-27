@@ -8,5 +8,6 @@ abstract class Routes {
   static const loginpage = '/loginpage';
   static const profile = '/profile';
   static const editprofile = '/editprofile';
+  static const search = '/search';
   
 }

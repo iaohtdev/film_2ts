@@ -13,6 +13,8 @@ import 'package:movie_info/page/navigation_bar/navigation_bar.dart';
 import 'package:movie_info/page/navigation_bar/navigation_controller.dart';
 import 'package:movie_info/page/profile/components/edit_profile.dart';
 import 'package:movie_info/page/profile/profile_page.dart';
+import 'package:movie_info/page/search/search_controller.dart';
+import 'package:movie_info/page/search/search_page.dart';
 
 import '../page/profile/profile_controller.dart';
 part 'app_routes.dart';
@@ -59,10 +61,7 @@ class AppPages {
         binding: GetBinding(
           Routes.detailpage,
         ),
-      transition: Transition.downToUp
-        
-        ),
-        
+        transition: Transition.downToUp),
     GetPage(
       name: Routes.loginpage,
       page: () => LoginPage(),
@@ -71,22 +70,26 @@ class AppPages {
       ),
     ),
     GetPage(
-      name: Routes.profile,
-      page: () => ProfilePage(),
-      binding: GetBinding(
-        Routes.profile,
-      ),
-      curve:  Curves.bounceInOut
-    ) ,
+        name: Routes.profile,
+        page: () => ProfilePage(),
+        binding: GetBinding(
+          Routes.profile,
+        ),
+        curve: Curves.bounceInOut),
     GetPage(
-      name: Routes.editprofile,
-      page: () => EditProfile(),
-      binding: GetBinding(
-        Routes.editprofile,
-
-      ),
-      transition: Transition.rightToLeft
-    )
+        name: Routes.editprofile,
+        page: () => EditProfile(),
+        binding: GetBinding(
+          Routes.editprofile,
+        ),
+        transition: Transition.rightToLeft),
+    GetPage(
+        name: Routes.search,
+        page: () => SearchPage(),
+        binding: GetBinding(
+          Routes.search,
+        ),
+       )
   ];
 }
 
@@ -110,17 +113,28 @@ class GetBinding extends Bindings {
         break;
       case Routes.homepage:
         Get.lazyPut(() => NavigationBarController());
+        Get.lazyPut(() => HomeController());
+
         break;
       case Routes.detailpage:
         Get.lazyPut(() => DetailMovieController());
+        Get.lazyPut(() => HomeController());
+
         break;
       case Routes.loginpage:
         Get.lazyPut(() => LoginController());
         break;
       case Routes.profile:
         Get.lazyPut(() => ProfileController());
+        Get.lazyPut(() => HomeController());
+
         break;
- 
+      case Routes.search:
+        Get.lazyPut(() => SearchController());
+       
+
+        break;
+
       /* Example
       case ExamplePage.routeName:
         Get.lazyPut(() => ExamplePageController());

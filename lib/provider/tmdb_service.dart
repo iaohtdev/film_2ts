@@ -8,5 +8,6 @@ class TmdbService {
         showErrorLogs: true,
         showLogs: true,
       ),
+    
       defaultLanguage: "vi");
 }
