@@ -11,6 +11,7 @@ import 'package:movie_info/page/login/login_controller.dart';
 import 'package:movie_info/page/login/login_page.dart';
 import 'package:movie_info/page/navigation_bar/navigation_bar.dart';
 import 'package:movie_info/page/navigation_bar/navigation_controller.dart';
+import 'package:movie_info/page/profile/components/change_language.dart';
 import 'package:movie_info/page/profile/components/edit_profile.dart';
 import 'package:movie_info/page/profile/profile_page.dart';
 import 'package:movie_info/page/search/search_controller.dart';
@@ -84,12 +85,19 @@ class AppPages {
         ),
         transition: Transition.rightToLeft),
     GetPage(
-        name: Routes.search,
-        page: () => SearchPage(),
+      name: Routes.search,
+      page: () => SearchPage(),
+      binding: GetBinding(
+        Routes.search,
+      ),
+    ),
+    GetPage(
+        name: Routes.changelanguage,
+        page: () => ChangeLanguagePage(),
         binding: GetBinding(
-          Routes.search,
+          Routes.changelanguage,
         ),
-       )
+        transition: Transition.rightToLeft),
   ];
 }
 
@@ -131,8 +139,10 @@ class GetBinding extends Bindings {
         break;
       case Routes.search:
         Get.lazyPut(() => SearchController());
-       
 
+        break;
+      case Routes.changelanguage:
+        Get.lazyPut(() => ProfileController());
         break;
 
       /* Example

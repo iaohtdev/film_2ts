@@ -9,5 +9,6 @@ abstract class Routes {
   static const profile = '/profile';
   static const editprofile = '/editprofile';
   static const search = '/search';
+  static const changelanguage = '/changelanguage';
   
 }

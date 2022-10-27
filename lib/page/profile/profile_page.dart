@@ -6,6 +6,7 @@ import 'package:movie_info/page/profile/components/privacy.dart';
 import 'package:movie_info/page/profile/components/terms.dart';
 import 'package:movie_info/page/profile/profile_controller.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:movie_info/routers/app_pages.dart';
 import 'package:movie_info/widget/icon_back.dart';
 import 'package:movie_info/widget/ouline_paint.dart';
 
@@ -129,7 +130,12 @@ class ProfilePage extends GetView<ProfileController> {
             }
             ),
         separateLine(),
-        _itemLanguage('assets/icons/icon-language.svg', 'Ngôn ngữ'),
+        _itemLanguage('assets/icons/icon-language.svg', 'Ngôn ngữ',ontap: (){
+
+          Get.toNamed(Routes.changelanguage);
+         controller. isChoose.value==true;
+controller. indexSelected.value =0;
+        }),
         itemBody('assets/icons/icon-logout.svg', 'Đăng xuất', ontap: () {
           FirebaseFunction().signOut();
         }),
@@ -224,7 +230,9 @@ class ProfilePage extends GetView<ProfileController> {
                     height: 40,
                     width: 40,
                     decoration: BoxDecoration(
-                        color: Colors.red, shape: BoxShape.circle),
+
+                      image: DecorationImage(image: AssetImage("assets/images/flag_vn.png"),fit: BoxFit.cover),
+                     shape: BoxShape.circle),
                   ),
                   SizedBox(
                     width: 5,

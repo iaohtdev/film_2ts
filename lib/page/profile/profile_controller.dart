@@ -24,6 +24,9 @@ class ProfileController extends GetxController {
     super.onInit();
     userModel.value = Get.arguments;
     await getDataUser();
+
+
+    
   }
 
   getDataUser() {
@@ -82,17 +85,25 @@ class ProfileController extends GetxController {
     update();
   }
 
-  // onTapPrivacy() async {
-
-  //   var url = Uri.parse("https://www.themoviedb.org/privacy-policy");
-  //   if (await canLaunchUrl(url))
-  //     await launchUrl(url);
-  //   else
-     
-  //     throw "Could not launch $url";
-  // }
 
 
+  ///changelanguage 
+  ///
+  ///
+  RxBool isChoose =false.obs;
+  RxInt indexSelected =0.obs;
+  changeLanguage(int index){
 
+
+    isChoose.value = true;
+    indexSelected.value =index;
+  }
+
+
+
+final lstLanguage =[
+  "Tiếng Việt",
+  "Tiếng Anh",
+];
 
 }
