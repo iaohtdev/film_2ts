@@ -115,7 +115,7 @@ class LandingPage extends GetView<LandingController> {
                     height: Get.height * 0.06,
                   ),
                   Text(
-                    'Chào mừng quay\ntrở lại',
+                    'Chào mừng đến\nMEFIN',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white.withOpacity(0.85),

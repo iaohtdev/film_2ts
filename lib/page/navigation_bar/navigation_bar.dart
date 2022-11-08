@@ -10,9 +10,9 @@ import 'package:movie_info/page/nofication/nofication_page.dart';
 class NavigationBarWidget extends GetView<NavigationBarController> {
   const NavigationBarWidget({Key? key}) : super(key: key);
 
-  static const List<Widget> _lstPage = <Widget>[
+  static  List<Widget> _lstPage = <Widget>[
     HomePage(),
-    FavoritePage(),
+     FavoritePage(),
     NoficationPage(),
     // ProfilePage()
   ];
@@ -69,7 +69,7 @@ class NavigationBarWidget extends GetView<NavigationBarController> {
                     icon: controller.selectedIndex.value == 1
                         ? SvgPicture.asset(
                             "assets/icons/icon-favorite.svg",
-                            height: 40,
+                            height: 25,
                             color: Colors.white,
                           )
                         : SvgPicture.asset(

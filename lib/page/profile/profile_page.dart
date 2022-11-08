@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_info/constants.dart';
 import 'package:movie_info/page/auth/login_firebase.dart';
+import 'package:movie_info/page/favorite/favorite_page.dart';
 import 'package:movie_info/page/profile/components/privacy.dart';
 import 'package:movie_info/page/profile/components/terms.dart';
 import 'package:movie_info/page/profile/profile_controller.dart';
@@ -115,7 +116,8 @@ class ProfilePage extends GetView<ProfileController> {
           controller.goToEdit();
         }),
         itemBody('assets/icons/icon-favorite.svg', 'Danh sách yêu thích',
-            ontap: () {}),
+            ontap: () {
+              Get.to(()=>FavoritePage(isNavipage: true,));            }),
         separateLine(),
         itemBody('assets/icons/icon-policy.svg', 'Chính sách bảo mật',
             ontap: () {

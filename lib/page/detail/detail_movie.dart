@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movie_info/constants.dart';
@@ -79,26 +81,25 @@ class DetailMoviePage extends GetView<DetailMovieController> {
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 gradient: LinearGradient(
-                                                  begin: Alignment.topLeft,
-                                                  end: Alignment.bottomRight,
-                                                  colors: [
-                                                    kPink.withOpacity(0.4),
-                                                    kLightGreen.withOpacity(0.4)
-                                                  ]
-                                                ),
+                                                    begin: Alignment.topLeft,
+                                                    end: Alignment.bottomRight,
+                                                    colors: [
+                                                      kPink.withOpacity(0.4),
+                                                      kLightGreen
+                                                          .withOpacity(0.4)
+                                                    ]),
                                               ),
                                               child: IconButton(
                                                   onPressed: () {
-                                                    Get.lazyPut(() => PlayTrailerController());
-                                                  Get.to(
-                                                    ()=>    PlayTrailerPage(),
-                                                        arguments: controller
-                                                            .trailerModel
-                                                            .value
-                                                            .key,
-                                                            
-                                                          
-                                                            );
+                                                    Get.lazyPut(() =>
+                                                        PlayTrailerController());
+                                                    Get.to(
+                                                      () => PlayTrailerPage(),
+                                                      arguments: controller
+                                                          .trailerModel
+                                                          .value
+                                                          .key,
+                                                    );
                                                   },
                                                   icon: Icon(
                                                     Icons.play_arrow,
@@ -302,17 +303,62 @@ class DetailMoviePage extends GetView<DetailMovieController> {
             },
             child: IconBackWidget(),
           ),
-          // InkWell(
-          //     onTap: () {},
-          //     child: IconButton(
-          //         onPressed: () {},
-          //         icon: Icon(
-          //           Icons.favorite_outline_rounded,
-          //           color: Colors.white,
-          //           size: 35,
-          //         ))),
+          Row(
+            children: [
+              StreamBuilder(
+                stream: FirebaseFirestore.instance
+                    .collection("favorite")
+                    .doc(FirebaseAuth.instance.currentUser!.email)
+                    .collection("items")
+                    .where("id", isEqualTo: controller.movieModel.value.id)
+                    .snapshots(),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.data == null) {
+                    return Text("");
+                  }
+                  return Padding(
+                    padding: const EdgeInsets.only(right: 8),
+                    child: IconButton(
+                      onPressed: () => snapshot.data.docs.length == 0
+                          ? controller.addFavorite()
+                          : print("already added"),
+                              
+                      icon: snapshot.data.docs.length == 0
+                          ? Icon(
+                              Icons.favorite_outline,
+                              color: Colors.white,
+                              size: 30,
+                            )
+                          : Icon(
+                              Icons.favorite,
+                              color: Colors.red,
+                              size: 30,
+                            ),
+                    ),
+                  );
+                },
+              ),
+              __itemButton(
+                  icon: Icon(
+                    Icons.share_outlined,
+                    size: 30,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    controller.share();
+                  }),
+            ],
+          )
         ],
       ),
+    );
+  }
+
+  Widget __itemButton({required Widget icon, Function()? onPressed}) {
+    return IconButton(
+      color: Colors.white,
+      icon: icon,
+      onPressed: onPressed,
     );
   }
 }

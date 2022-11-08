@@ -1,4 +1,5 @@
 import 'package:movie_info/provider/tmdb_service.dart';
+import 'package:tmdb_api/tmdb_api.dart';
 
 const BASE_URL = "https://image.tmdb.org/t/p/w500";
 const API_KEY = "7d9e3be468d2633d523c6e3e72fcab4a";
@@ -74,12 +75,13 @@ class ApiProvider {
     return trailler;
   }
 
-
-    Future searchMovie(String query) async {
-    Map search = await TmdbService().tmdbWithCustomLog.v3.search.queryMovies(
-          query,
-          region: "vi"
-        );
+  Future searchMovie(String query) async {
+    Map search = await TmdbService()
+        .tmdbWithCustomLog
+        .v3
+        .search
+        .queryMovies(query, region: "vi");
     return search;
   }
+
 }

@@ -91,18 +91,7 @@ class InfoMovie extends GetView<DetailMovieController> {
           SizedBox(
             height: 20,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _itemButton(Icons.add_box_outlined),
-              _itemButton(Icons.favorite_outline_rounded),
-              _itemButton(Icons.bookmark_outline_outlined),
-              _itemButton(Icons.share_outlined),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
+        
           Text(
             "Nội dung",
             style: TextStyle(
@@ -154,31 +143,5 @@ class InfoMovie extends GetView<DetailMovieController> {
     );
   }
 
-  Container _itemButton(IconData icon) {
-    return Container(
-        height: 60,
-        width: 60,
-        decoration: BoxDecoration(
-            color: Colors.grey.withOpacity(0.5),
-            borderRadius: BorderRadius.circular(8),
-            boxShadow: [
-              BoxShadow(
-                  color: kBlack.withOpacity(0.9),
-                  offset: Offset(2, 0),
-                  blurRadius: 1,
-                  spreadRadius: 2)
-            ],
-            gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: [
-                  kPink.withOpacity(0.5),
-                  kLightGreen.withOpacity(0.5)
-                ])),
-        child: Icon(
-          icon,
-          color: Colors.white,
-          size: 30,
-        ));
-  }
+
 }

@@ -32,9 +32,8 @@ class LoginController extends GetxController
     animationController =
         AnimationController(vsync: this, duration: animationDuration);
 
-    emailController.text = "thoai@gmail.com";
-    passwordController.text = "12345678";
-    nameController.text = "";
+   
+    // nameController.text = "";
   }
 
   @override

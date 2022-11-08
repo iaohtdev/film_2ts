@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:movie_info/constants.dart';
+import 'package:movie_info/page/landing/landing_page.dart';
 import 'package:movie_info/page/login/login_controller.dart';
 import 'package:movie_info/page/login/components/rounded_button.dart';
 import 'package:movie_info/page/login/components/rounded_input.dart';
+import 'package:movie_info/routers/app_pages.dart';
 import 'package:movie_info/widget/gradient_text.dart';
 import 'package:movie_info/widget/icon_back.dart';
 
@@ -43,7 +45,19 @@ class LoginForm extends GetView<LoginController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(height: 20),
-                    const IconBackWidget(),
+                    GestureDetector(
+                    onTap: () {
+                      Get.to(()=>LandingPage());
+                    },
+                    child: Container(
+                      
+                      child: SvgPicture.asset(
+                        'assets/icons/icon-back.svg',
+                       color: Colors.white,
+                       height: 30,
+                      ),
+                    ),
+                  ),
                     SizedBox(height: Get.height * 0.1),
                     const Text(
                       'Xin chào!',

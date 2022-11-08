@@ -4,14 +4,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:webview_flutter/webview_flutter.dart';
-class PrivacyPage extends StatefulWidget {
-  const PrivacyPage({ Key? key }) : super(key: key);
+class WebviewNofi extends StatefulWidget {
+
+  const WebviewNofi({ Key? key,}) : super(key: key);
 
   @override
-  State<PrivacyPage> createState() => _PrivacyPageState();
+  State<WebviewNofi> createState() => _WebviewNofiState();
 }
 
-class _PrivacyPageState extends State<PrivacyPage> {
+class _WebviewNofiState extends State<WebviewNofi> {
 
   @override
   void initState() {
@@ -23,11 +24,9 @@ class _PrivacyPageState extends State<PrivacyPage> {
     return Scaffold(
       
      
-      body: SafeArea(
-        child: WebView(
-        
-          initialUrl: "https://www.themoviedb.org/privacy-policy?language=vi-VN",
-        ),
+      body: WebView(
+      
+        initialUrl: "https://docs.google.com/document/d/1D7yl06pNX0ejGbZqGdoPFhrmOooLOFyd5IsI60MFvUQ/edit",
       ),
 
       floatingActionButton: GestureDetector(

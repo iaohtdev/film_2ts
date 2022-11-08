@@ -3,6 +3,7 @@ import 'package:flutter/animation.dart';
 import 'package:get/get.dart';
 import 'package:movie_info/page/detail/detail_controller.dart';
 import 'package:movie_info/page/detail/detail_movie.dart';
+import 'package:movie_info/page/favorite/favorite_controller.dart';
 import 'package:movie_info/page/home/home_page.dart';
 import 'package:movie_info/page/home/home_page_controller.dart';
 import 'package:movie_info/page/landing/landing_controller.dart';
@@ -117,6 +118,7 @@ class GetBinding extends Bindings {
         Get.lazyPut(() => LoginController());
         Get.lazyPut(() => HomeController());
         Get.lazyPut(() => ProfileController());
+        Get.lazyPut(()=>FavoriteController());
 
         break;
       case Routes.homepage:
