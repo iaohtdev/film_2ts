@@ -62,77 +62,41 @@ class EditProfile extends GetView<ProfileController> {
               ],
             ),
             SizedBox(height: 30),
-            GetBuilder<ProfileController>(
-              init: ProfileController(),
-              initState: (_) {},
-              builder: (_) {
-                return GestureDetector(
-                  onTap: () {
-                    controller.getImage();
-                  },
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Stack(
-                      clipBehavior: Clip.none,
-                      children: [
-                        CustomOutlineButton(
-                          gradient: LinearGradient(
-                              begin: Alignment.topLeft,
-                              end: Alignment.bottomRight,
-                              colors: [
-                                kPink,
-                                kPink.withOpacity(0.7),
-                                kLightGreen.withOpacity(0.7),
-                                kLightGreen
-                              ],
-                              stops: const [
-                                0.2,
-                                0.4,
-                                0.6,
-                                1
-                              ]),
-                          radius: Get.width * 0.8,
-                          strokeWidth: 2.5,
-                          child: Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: Container(
-                              height: 150,
-                              width: 150,
-                              child: ClipRRect(
-                                  borderRadius:
-                                      BorderRadius.circular(Get.width * 0.8),
-                                  child: controller.image == null
-                                      ? Image.asset("assets/images/logo.png")
-                                      : Image.file(controller.image!,fit: BoxFit.cover,)),
-                            ),
-                          ),
-                        ),
-                        Positioned(
-                          left: 60,
-                          bottom: -10,
-                          child: InkWell(
-                            onTap: () {},
-                            child: Container(
-                              height: 35,
-                              width: 35,
-                              decoration: BoxDecoration(
-                                color: Colors.grey,
-                                shape: BoxShape.circle,
-                              ),
-                              child: Center(
-                                  child: SvgPicture.asset(
-                                "assets/icons/icon-camera.svg",
-                                color: kBlack,
-                              )),
-                            ),
-                          ),
-                        )
-                      ],
+           Align(
+                  alignment: Alignment.center,
+                  child: CustomOutlineButton(
+                    gradient: LinearGradient(
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                        colors: [
+                          kPink,
+                          kPink.withOpacity(0.7),
+                          kLightGreen.withOpacity(0.7),
+                          kLightGreen
+                        ],
+                        stops: const [
+                          0.2,
+                          0.4,
+                          0.6,
+                          1
+                        ]),
+                    radius: Get.width * 0.8,
+                    strokeWidth: 2.5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(5.0),
+                      child: Container(
+                        height: 150,
+                        width: 150,
+                        child: ClipRRect(
+                            borderRadius:
+                                BorderRadius.circular(Get.width * 0.8),
+                            child: controller.image == null
+                                ? Image.asset("assets/images/logo.png")
+                                : Image.file(controller.image!,fit: BoxFit.cover,)),
+                      ),
                     ),
                   ),
-                );
-              },
-            ),
+                ),
             SizedBox(height: 24),
           ],
         ),

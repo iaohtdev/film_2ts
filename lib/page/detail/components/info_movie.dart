@@ -34,12 +34,19 @@ class InfoMovie extends GetView<DetailMovieController> {
               SizedBox(
                 width: 5,
               ),
-              Text(
-                controller.movieModel.value.productionCountries![0].name!,
-                style: TextStyle(
-                  color: Colors.white,
-                ),
-              ),
+              controller.movieModel.value.productionCountries == null
+                  ? Text(
+                      "Country",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    )
+                  : Text(
+                      controller.movieModel.value.productionCountries![0].name!,
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
             ],
           ),
           SizedBox(
@@ -57,13 +64,18 @@ class InfoMovie extends GetView<DetailMovieController> {
                   SizedBox(
                     width: 5,
                   ),
-                  Text(
-                    DateFormat('dd-MM-yyyy')
-                        .format(DateTime.parse(
-                            controller.movieModel.value.releaseDate!))
-                        .toString(),
-                    style: TextStyle(color: Colors.white),
-                  ),
+                  controller.movieModel.value.releaseDate == null
+                      ? Text(
+                          "11-11-2022",
+                          style: TextStyle(color: Colors.white),
+                        )
+                      : Text(
+                          DateFormat('dd-MM-yyyy')
+                              .format(DateTime.parse(
+                                  controller.movieModel.value.releaseDate!))
+                              .toString(),
+                          style: TextStyle(color: Colors.white),
+                        ),
                 ],
               ),
               SizedBox(
@@ -80,7 +92,7 @@ class InfoMovie extends GetView<DetailMovieController> {
                     width: 5,
                   ),
                   Text(
-                    minutesToHours(controller.movieModel.value.runtime!)
+                    minutesToHours(controller.movieModel.value.runtime ?? 1)
                         .toString(),
                     style: TextStyle(color: Colors.white),
                   ),
@@ -91,7 +103,6 @@ class InfoMovie extends GetView<DetailMovieController> {
           SizedBox(
             height: 20,
           ),
-        
           Text(
             "Nội dung",
             style: TextStyle(
@@ -100,8 +111,8 @@ class InfoMovie extends GetView<DetailMovieController> {
           SizedBox(height: 10),
           Text(
             controller.movieModel.value.overview != ""
-                ? controller.movieModel.value.overview ?? "Không có  mô tả phim"
-                : "Không có  mô tả phim",
+                ? controller.movieModel.value.overview ?? "Đang cập nhật mô tả phim"
+                : "Đang cập nhật mô tả phim",
             style: TextStyle(
               color: Colors.white,
               fontSize: 14,
@@ -119,29 +130,33 @@ class InfoMovie extends GetView<DetailMovieController> {
                     fontWeight: FontWeight.bold),
               ),
               SizedBox(height: 10),
-              Wrap(
-                  direction: Axis.horizontal,
-                  children: controller.movieModel.value.genres!.map((e) {
-                    var item = Container(
-                      margin: EdgeInsets.only(right: 5, bottom: 5),
-                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: kPurple, width: 2),
-                          borderRadius: BorderRadius.circular(5)),
-                      child: Text(
-                        e.name!,
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    );
+              controller.movieModel.value.genres == null
+                  ? Text(
+                      "Đang cập nhật",
+                      style: TextStyle(color: Colors.white),
+                    )
+                  : Wrap(
+                      direction: Axis.horizontal,
+                      children: controller.movieModel.value.genres!.map((e) {
+                        var item = Container(
+                          margin: EdgeInsets.only(right: 5, bottom: 5),
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                          decoration: BoxDecoration(
+                              border: Border.all(color: kPurple, width: 2),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Text(
+                            e.name!,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        );
 
-                    return item;
-                  }).toList()),
+                        return item;
+                      }).toList()),
             ],
           ),
         ],
       ),
     );
   }
-
-
 }

@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:movie_info/models/cast_crew.dart';
 import 'package:movie_info/models/movie.dart';
@@ -23,6 +24,11 @@ class DetailMovieController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
+    getDataMovie();
+    update();
   }
 
   void dispose() {
@@ -34,22 +40,26 @@ class DetailMovieController extends GetxController {
   Future<String> getDataMovie() async {
     await ApiProvider().getDetailMovie(idMovie).then((respone) async {
       movieModel.value = await MovieModel.fromJson(respone);
+      update();
     });
 
     await ApiProvider().getCastAndCrew(idMovie).then((respone) async {
       for (var item in respone["cast"]) {
         lstCast.add(Cast.fromJson(item));
+        update();
       }
     });
     await ApiProvider().getLstRcm(idMovie).then((respone) {
       for (var item in respone["results"]) {
         lstRcm.add(MovieModel.fromJson(item));
+        update();
       }
     });
     await ApiProvider().getTrailler(idMovie).then((respone) async {
       trailerModel.value = await Trailer.fromJson(respone["results"][0]);
 
       print("thoai" + trailerModel.value.key!);
+      update();
     });
     return Future.value("Data download successfully");
   }

@@ -73,17 +73,6 @@ class ProfileController extends GetxController {
     Get.offAllNamed(Routes.navigationbar);
   }
 
-  Future getImage() async {
-    final image = await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    if (image == null) return;
-    final imageTemporary = File(image.path);
-
-    urlPhoto = imageTemporary;
-    this.image = imageTemporary;
-
-    update();
-  }
 
 
 

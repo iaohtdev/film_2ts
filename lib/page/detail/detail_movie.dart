@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:movie_info/constants.dart';
 import 'package:movie_info/page/detail/components/info_movie.dart';
@@ -10,6 +11,7 @@ import 'package:movie_info/page/detail/components/lst_rcm.dart';
 import 'package:movie_info/page/detail/components/play_trailer.dart';
 import 'package:movie_info/page/detail/detail_controller.dart';
 import 'package:movie_info/provider/api_provider.dart';
+import 'package:movie_info/routers/app_pages.dart';
 import 'package:movie_info/widget/icon_back.dart';
 import 'package:movie_info/widget/ouline_paint.dart';
 import 'package:movie_info/widget/rate.dart';
@@ -20,26 +22,14 @@ class DetailMoviePage extends GetView<DetailMovieController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.movieModel.value.voteAverage =0.0;
     return Scaffold(
         backgroundColor: kBlack,
-        body: FutureBuilder<String>(
-          future: controller.getDataMovie(),
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(
-                  child: Image.asset(
-                "assets/gif/loading.gif",
-                scale: 2,
-              ));
-            } else {
-              if (snapshot.hasError)
-                return Center(
-                    child: Text(
-                  "Có lỗi trong quá trình tải dữ liệu",
-                  style: TextStyle(color: Colors.white),
-                ));
-              else
-                return SingleChildScrollView(
+        body: GetBuilder<DetailMovieController>(
+          init: DetailMovieController(),
+          initState: (_) {},
+          builder: (_) {
+            return SingleChildScrollView(
                   child: Column(
                     children: [
                       Stack(
@@ -54,193 +44,162 @@ class DetailMoviePage extends GetView<DetailMovieController> {
                                 height: 30,
                               ),
                               Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   _poster(),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 90),
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.end,
+                                      crossAxisAlignment: CrossAxisAlignment.end,
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(right: 20),
+                                          padding: const EdgeInsets.only(right: 20),
                                           child: CustomOutlineButton(
                                             strokeWidth: 3,
-                                            radius: 30,
-                                            gradient: LinearGradient(
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight,
-                                              colors: [kPink, kLightGreen],
-                                            ),
-                                            child: Container(
-                                              height: 60,
-                                              width: 60,
-                                              decoration: BoxDecoration(
-                                                shape: BoxShape.circle,
-                                                gradient: LinearGradient(
-                                                    begin: Alignment.topLeft,
-                                                    end: Alignment.bottomRight,
-                                                    colors: [
-                                                      kPink.withOpacity(0.4),
-                                                      kLightGreen
-                                                          .withOpacity(0.4)
-                                                    ]),
-                                              ),
-                                              child: IconButton(
-                                                  onPressed: () {
-                                                    Get.lazyPut(() =>
-                                                        PlayTrailerController());
-                                                    Get.to(
-                                                      () => PlayTrailerPage(),
-                                                      arguments: controller
-                                                          .trailerModel
-                                                          .value
-                                                          .key,
-                                                    );
-                                                  },
-                                                  icon: Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                    size: 40,
-                                                  )),
-                                            ),
-                                          ),
+                          radius: 30,
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [kPink, kLightGreen],
+                                    ),
+                                    child: Container(
+                                      height: 60,
+                                      width: 60,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        gradient: LinearGradient(
+                                            begin: Alignment.topLeft,
+                                            end: Alignment.bottomRight,
+                                            colors: [
+                                              kPink.withOpacity(0.4),
+                                              kLightGreen.withOpacity(0.4)
+                                            ]),
+                                      ),
+                                      child: IconButton(
+                                          onPressed: () {
+                                            Get.lazyPut(
+                                                () => PlayTrailerController());
+                                            Get.to(
+                                              () => PlayTrailerPage(id: controller.movieModel.value.id,),
+                                              arguments: controller
+                                                  .trailerModel.value.key
+                                            );
+                                          },
+                                          icon: Icon(
+                                            Icons.play_arrow,
+                                            color: Colors.white,
+                                            size: 40,
+                                          )),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 0,
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      controller.movieModel.value.voteAverage 
+                                          .toStringAsFixed(1)
+                                          .toString(),
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 40),
+                                    ),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Rate(
+                                          iconSize: 15,
+                                          color: Colors.yellow,
+                                          allowHalf: true,
+                                          allowClear: true,
+                                          initialValue: controller
+                                              .movieModel.value.voteAverage,
+                                          readOnly: false,
                                         ),
-                                        SizedBox(
-                                          height: 0,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              controller
-                                                  .movieModel.value.voteAverage!
-                                                  .toStringAsFixed(1)
-                                                  .toString(),
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 40),
-                                            ),
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Rate(
-                                                  iconSize: 15,
-                                                  color: Colors.yellow,
-                                                  allowHalf: true,
-                                                  allowClear: true,
-                                                  initialValue: controller
-                                                      .movieModel
-                                                      .value
-                                                      .voteAverage!,
-                                                  readOnly: false,
-                                                ),
-                                                Text(
-                                                  controller.movieModel.value
-                                                          .voteCount!
-                                                          .toString() +
-                                                      " VOTE",
-                                                  style: TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.white),
-                                                ),
-                                              ],
-                                            ),
-                                            SizedBox(
-                                              width: 60,
-                                            ),
-                                          ],
+                                        Text(
+                                          controller.movieModel.value.voteCount
+                                                  .toString() +
+                                              " VOTE",
+                                          style: TextStyle(
+                                              fontSize: 12,
+                                              color: Colors.white),
                                         ),
                                       ],
                                     ),
-                                  )
-                                ],
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                            ],
-                          ))
+                                    SizedBox(
+                                      width: 60,
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
                         ],
                       ),
-                      InfoMovie(),
                       SizedBox(
                         height: 30,
-                      ),
-                      ListCast(),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      LstRecommend(),
-                      SizedBox(
-                        height: 100,
                       ),
                     ],
-                  ),
-                );
-            }
-          },
-        ));
+                  ))
+                ],
+              ),
+              InfoMovie(),
+              SizedBox(
+                height: 30,
+              ),
+              ListCast(),
+              SizedBox(
+                height: 30,
+              ),
+              LstRecommend(),
+              SizedBox(
+                height: 100,
+              ),
+            ],
+          ),
+        );})          
+        )    ;
   }
 
   Padding _poster() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15),
-      child: FutureBuilder<PaletteGenerator>(
-          future: controller.getColorFromPicture(
-              '$BASE_URL${controller.movieModel.value.posterPath}'),
-          builder:
-              (BuildContext context, AsyncSnapshot<PaletteGenerator> snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return Center(
-                    child: Text(
-                  "",
-                ));
-              default:
-                if (snapshot.hasError)
-                  return new Text('Error: ${snapshot.error}');
-                else {
-                  Color colorBlur = snapshot.data!.dominantColor!.color;
-                  return Container(
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(
-                        20,
-                      ),
-                      child: CachedNetworkImage(
-                        height: 220,
-                        width: 150,
-                        imageUrl:
-                            '$BASE_URL${controller.movieModel.value.posterPath ?? "pHkKbIRoCe7zIFvqan9LFSaQAde.jpg"}',
-                        fit: BoxFit.cover,
-                        placeholder: (context, url) => Container(
-                          height: 220,
-                          width: 150,
-                          color: kBlack.withOpacity(0.5),
-                        ),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
-                      ),
-                    ),
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        boxShadow: [
-                          BoxShadow(
-                              offset: Offset(0, 4),
-                              color: colorBlur,
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(15),
+        
+        child: Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                 offset: Offset(0, 4),
+                              color: kBlack,
                               spreadRadius: 1,
-                              blurRadius: 8)
-                        ]),
-                  );
-                }
-            }
-          }),
+                              blurRadius: 8
+              )
+            ]
+          ),
+          child: CachedNetworkImage(
+                            height: 220,
+                            width: 150,
+                            imageUrl:
+                                '$BASE_URL${controller.movieModel.value.posterPath ?? "pHkKbIRoCe7zIFvqan9LFSaQAde.jpg"}',
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => Container(
+                              height: 220,
+                              width: 150,
+                              color: kBlack.withOpacity(0.5),
+                            ),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
+                          ),
+        ),
+      ),
     );
   }
 
@@ -299,9 +258,16 @@ class DetailMoviePage extends GetView<DetailMovieController> {
         children: [
           InkWell(
             onTap: () {
-              Get.back();
+              Get.offAllNamed(Routes.navigationbar);
             },
-            child: IconBackWidget(),
+            child: Container(
+                      
+                      child: SvgPicture.asset(
+                        'assets/icons/icon-back.svg',
+                       color: Colors.white,
+                       height: 30,
+                      ),
+                    ),
           ),
           Row(
             children: [
@@ -322,7 +288,6 @@ class DetailMoviePage extends GetView<DetailMovieController> {
                       onPressed: () => snapshot.data.docs.length == 0
                           ? controller.addFavorite()
                           : print("already added"),
-                              
                       icon: snapshot.data.docs.length == 0
                           ? Icon(
                               Icons.favorite_outline,

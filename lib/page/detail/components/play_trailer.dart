@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:movie_info/routers/app_pages.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class PlayTrailerPage extends GetView<PlayTrailerController> {
-  PlayTrailerPage({Key? key}) : super(key: key);
-
+  PlayTrailerPage({Key? key,required this.id}) : super(key: key);
+int? id;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,12 +25,12 @@ class PlayTrailerPage extends GetView<PlayTrailerController> {
                   InkWell(
                     onTap: () {
                       controller.youtubePlayerController.pause();
-                      Get.back();
+                      Get.offAllNamed(Routes.detailpage,arguments: id);
                     },
                     child: Container(
                       height: 30,
                       width: 30,
-                      color: Colors.red,
+                      color: Colors.grey.withOpacity(0.4),
                       child: Image.asset(
                         "assets/icons/icon-cancel.png",
                         color: Colors.white,
